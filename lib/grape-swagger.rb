@@ -179,16 +179,9 @@ module Grape
               end
             end
 
-            def try(*a, &b)
-              if a.empty? && block_given?
-                yield self
-              else
-                public_send(*a, &b) if respond_to?(a.first)
-              end
-            end
-
             def strip_heredoc(string)
-              indent = string.scan(/^[ \t]*(?=\S)/).min.try(:size) || 0
+              indent = string.scan(/^[ \t]*(?=\S)/).min
+              indent = indent ? indent.size : 0
               string.gsub(/^[ \t]{#{indent}}/, '')
             end
           end
